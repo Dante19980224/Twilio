@@ -13,8 +13,8 @@ router.post("/", (req, res) => {
 
   client.messages.create({
     body: sms,
-    to: '+17323519237',
-    from: '+14159031508',
+    to: process.env.MY_NUMBER,
+    from: process.env.TWILIO_NUMBER_ONE,
   }).then((message) => console.log(`sent message with sid: ${message.sid}`));
 
 	res.json({
