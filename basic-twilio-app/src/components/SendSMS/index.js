@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter as Redirect } from "react-router-dom";
 import axios from "axios";
 // import "./inbox.css"
 
@@ -23,7 +24,14 @@ class SendSMS extends Component {
   }
 
   handleSubmit(event){
+    if(this.state.message === ""){
+      alert("Cannot send empty message");
+      return;
+    }
     this.postMessage(this.state.message);
+    this.setState({
+      message: ''   // clear input box
+    })
     event.preventDefault();
   }
 
@@ -32,6 +40,7 @@ class SendSMS extends Component {
       message: message
     }
     const postReq = await axios.post("http://localhost:4000/mainTwilio", postBody);
+    alert(`Sent message: ${message}`);
     console.log("sent message is: ", message);
     console.log("postReq is: ", postReq);
   }
@@ -46,7 +55,9 @@ class SendSMS extends Component {
             Message:
             <input type="text" value={this.state.message} onChange={this.updateMessageValue.bind(this)} />
           </label>
-          <input type="submit" value="Submit" />
+          <Redirect to={'./'} push >
+            <input type="submit" value="Submit" />
+          </Redirect>
         </form>
       </div>
     );
