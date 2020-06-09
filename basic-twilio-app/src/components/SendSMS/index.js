@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { BrowserRouter as Redirect } from "react-router-dom";
 import axios from "axios";
 // import "./inbox.css"
 
@@ -25,7 +24,9 @@ class SendSMS extends Component {
 
   handleSubmit(event){
     if(this.state.message === ""){
-      alert("Cannot send empty message");
+      alert("Message cannot be empty");
+      event.preventDefault();
+      this.props.history.push("/");
       return;
     }
     this.postMessage(this.state.message);
@@ -55,9 +56,7 @@ class SendSMS extends Component {
             Message:
             <input type="text" value={this.state.message} onChange={this.updateMessageValue.bind(this)} />
           </label>
-          <Redirect to={'./'} push >
-            <input type="submit" value="Submit" />
-          </Redirect>
+          <input type="submit" value="Submit" />
         </form>
       </div>
     );
